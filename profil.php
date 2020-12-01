@@ -27,7 +27,7 @@ if(isset($_POST['session_fin']))
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.css">
     <link rel="stylesheet" href="css/style.css">
-    <title>Inscription</title>
+    <title>Connexion</title>
 </head>
 <body>
     
@@ -59,23 +59,25 @@ if(isset($_POST['session_fin']))
                     }
                     else
                     {
-                        echo '<li class="nav-item active">                        
+                        echo '<li class="nav-item ">                        
                             <a class="nav-link" href="inscription.php">S\'inscrire</a>
-                            <span class="sr-only">(current)</span>
+                            
                         </li>
-                        <li class="nav-item ">
+                        <li class="nav-item active">
                             <a class="nav-link" href="connexion.php">Se connecter</a>
-                        </li>';
+                        </li>
+                        <span class="sr-only">(current)</span>';
                     }
                     ?>
                 </ul>
             </div>
         </nav>
     </header>
-        <main >
+        <main>
             <div class="jumbotron2">
-                <h1>Inscription</h1>
-                <p class="lead">Veuillez vous inscrire pour entrer dans la discussion.</p>
+                <h1>Connexion</h1>
+                <p class="lead">Veuillez vous connecter pour entrer dans la discussion.</p>
+               
                 <div class="row">
                 <section class="col-lg-3"></section>
                 <section class="col-lg-6 col-sm-12">
@@ -87,26 +89,26 @@ if(isset($_POST['session_fin']))
                         <div class="form-group">
                         <label for="login">Identifiant</label>
                         <input type="txt" class="form-control" id="login" name="login" 
-                        placeholder="login" required>
+                        value="<?php echo $login; ?>" required>
                         </div>   
 
                         <div class="form-group">
                         <label for="password">Mot de passse</label>
                         <input type="password" class="form-control" id="password" 
-                        name="password" placeholder="Password" required>
+                        name="password" placeholder="Entrer un nouveau mot de passe" required>
                         </div>                       
-                        
                         <div class="form-group">
-                        <label for="conf-password">Confirmer votre mot de passe</label>
+                        <label for="conf-password">Confirmer votre nouveau mot de passe</label>
                         <input type="password" class="form-control" id="conf-password" 
-                        name="conf-password" placeholder="Password" required>
+                        name="conf-password" placeholder="Mot de passe identique" required>
                         </div>                                            
-                                                    
-                        <button type="submit" class="btn btn-secondary" name="submit">Envoyer</button>
+                        <input type="hidden" name="id" value="<?php echo (int)$id;// conserve la valeur id dans un champs caché du formulaire
+                        ?>">                           
+                                                                    
+                        <button type="submit" class="btn btn-secondary" name="submit">Valider</button>
                         </fieldset>
                     </form>
                 </section>
-                </div>
             </div>
         </main>
         <footer id="footer">

@@ -35,7 +35,7 @@ if(isset($_POST['session_fin']))
      
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -78,8 +78,9 @@ if(isset($_POST['session_fin']))
                 <h1>Connexion</h1>
                 <p class="lead">Veuillez vous connecter pour entrer dans la discussion.</p>
                
-                
-                <section class="col-sm-12">
+                <div class="row">
+                <section class="col-lg-3"></section>
+                <section class="col-lg-6 col-sm-12">
                     <form action="inscription.php" method="post">
                         <fieldset >
                        <!-- envoyer un message d'erreur si login existe déjà ou si password invalide-->
@@ -120,8 +121,8 @@ if(isset($_POST['session_fin']))
             </div>
         </footer>
     </div>
-    <script src="../js/jquery.min.js"></script>
-    <script src="../js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
