@@ -27,13 +27,13 @@ if(isset($_POST['session_fin']))
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.css">
     <link rel="stylesheet" href="css/style.css">
-    <title>Acceuil</title>
+    <title>Accueil</title>
 </head>
 <body>
     
     <header>               
      
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -55,7 +55,7 @@ if(isset($_POST['session_fin']))
                         </li>';
                         echo '<li class="nav-item align-right">
                         <form action="connexion.php" method="post">                                            
-                            <button type="submit" class="btn btn-info" name="session_fin">Déconnexion</button><br/>                        
+                            <button type="submit" class="btn secondary disabled" name="session_fin">Déconnexion</button><br/>                        
                         </form>
                         </li>';
                     }
@@ -73,16 +73,17 @@ if(isset($_POST['session_fin']))
             </div>
         </nav>
     </header> 
+        
+    <div class="jumbotron2">
         <main>
-            <div class="jumbotron-index">
                 <h1 class="display-3">Bien-être</h1>
                <p class="lead">Veuillez vous inscrire ou vous connecter pour rentrer dans la discussion.</p><br/>
                 
-                    <a class="btn btn-primary btn-lg" href="inscription.php" role="button">Inscription</a>
-                    <a class="btn btn-primary btn-lg" href="connexion.php" role="button">Connexion</a>
-            </div>
+                    <a class="btn btn-secondary btn-lg" href="inscription.php" role="button">Inscription</a>
+                    <a class="btn btn-secondary btn-lg" href="connexion.php" role="button">Connexion</a>
+            
         </main>  
-    
+    </div>
         <footer id="footer">
             <div class="row">
                 <div class="col-lg-12">
@@ -99,8 +100,8 @@ if(isset($_POST['session_fin']))
             </div>
         </footer>
     
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
