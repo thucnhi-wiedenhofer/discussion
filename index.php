@@ -30,6 +30,7 @@ if(isset($_POST['session_fin']))
     <title>Accueil</title>
 </head>
 <body>
+<div class="container-fluid">
     
     <header>               
      
@@ -74,16 +75,16 @@ if(isset($_POST['session_fin']))
         </nav>
     </header> 
         
-    <div class="jumbotron2">
-        <main>
+    <main class="jumbotron2">
+        <section>
                 <h1 class="display-3">Bien-être</h1>
                <p class="lead">Veuillez vous inscrire ou vous connecter pour rentrer dans la discussion.</p><br/>
                 
                     <a class="btn btn-secondary btn-lg" href="inscription.php" role="button">Inscription</a>
                     <a class="btn btn-secondary btn-lg" href="connexion.php" role="button">Connexion</a>
             
-        </main>  
-    </div>
+                </section>  
+    </main>
         <footer id="footer">
             <div class="row">
                 <div class="col-lg-12">
@@ -102,6 +103,6 @@ if(isset($_POST['session_fin']))
     
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
-
+</div>
 </body>
 </html>
