@@ -26,11 +26,11 @@ if(isset($_SESSION) && !empty($_SESSION)){
     /*on prépare une requête pour récupérer les données de l'utilisateur qui a rempli
      le formulaire, afin de vérifier que le login n'existe pas déja dans la table*/
     $stmt = $pdo->prepare('SELECT * FROM utilisateurs WHERE login=?');
-    $stmt->execute([$login]);
-    $userExist = $stmt->fetchALL();
+    $stmt->execute($login);
+    $userExist = $stmt->fetch();
      
    
-            if (!empty($userExist))
+            if ($userExist)
             {
                 $error="Ce login existe déja !";
             }
@@ -44,12 +44,11 @@ if(isset($_SESSION) && !empty($_SESSION)){
             }
             else
             {
-                /*si le login est nouveau, on insert les données dans la base livreor,table utilisateurs*/
-            $create="INSERT INTO utilisateurs (login, password)
-                VALUES ('$login','$password')";
-                $query = mysqli_query($db,$create);
-                /* on attribue une valeur login au tableau session si la requéte a fonctionné*/
-                if($query){$_SESSION['login']=$login;}
+                /*si le login est nouveau, on insert les données dans la base discussion,table utilisateurs*/
+                $sql = "INSERT INTO utilisateurs (login, password) VALUES (?,?)";
+                $stmt= $pdo->prepare($sql);
+                $stmt->execute([$login, $password]);
+
                 header('Location:connexion.php');
             }
     mysqli_close($db);

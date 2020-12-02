@@ -1,14 +1,4 @@
 <?php
-
-try
-{
-	$bdd = new PDO('mysql:host=localhost;dbname=discussion;charset=utf8', 'root', '');
-}
-catch (Exception $e)
-{
-        die('Erreur : ' . $e->getMessage());
-}
-
 session_start();
 //déconnexion
 if(isset($_POST['session_fin']))
@@ -18,7 +8,50 @@ if(isset($_POST['session_fin']))
     //détruit la session
     session_destroy();
 }
+    
+/*routine de validation des données*/
+    
+//connexion en tant que membre:
+if (isset($_POST['submit'])) {
+    function valid_data($data){
+        $data = trim($data);/*enlève les espaces en début et fin de chaîne*/
+        $data = stripslashes($data);/*enlève les slashs dans les textes*/
+        $data = htmlspecialchars($data);/*enlève les balises html comme ""<>...*/
+        return $data;
+    }
+        /*on récupère les valeurs login ,password du formulaire et on y applique
+         les filtres de la fonction valid_data*/
+        $login = valid_data($_POST["login"]);
+        $password = $_POST["password"];
+            
+        $pdo = new PDO('mysql:host=localhost;dbname=discussion', 'root', '', array(PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION));
+    /*on prépare une requête pour récupérer les données de l'utilisateur qui a rempli
+     le formulaire, afin de vérifier que le login n'existe pas déja dans la table*/
+     $stmt = $pdo->prepare("SELECT * FROM utilisateurs WHERE login = ?");
+     $stmt->execute([$login]);
+     $user = $stmt->fetch();
+     
+         
+       
+            if (empty($user))//champs vide
+            {
+                $error="Ce login n'existe pas!";
+            }
+            elseif (password_verify($password, $user['password']))//vérification de password
+            { 
+                $_SESSION['login']=$user['login'];
+                $_SESSION['id']=$user['id']; 
+                header('location:discussion.php');                                 
+            } 
+            else //si password différent
+            {
+                $error='Le mot de passe est invalide.';
+               
+            }
+}
+       
 ?>
+    
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -82,7 +115,7 @@ if(isset($_POST['session_fin']))
                 <div class="row">
                 <section class="col-lg-3"></section>
                 <section class="col-lg-6 col-sm-12">
-                    <form action="inscription.php" method="post">
+                    <form action="connexion.php" method="post">
                         <fieldset >
                        <!-- envoyer un message d'erreur si login existe déjà ou si password invalide-->
                        <?php if(!empty($error)){echo '<p class="h4 text-warning">'.$error.'</p>'; } ?> 
