@@ -79,18 +79,7 @@ if (isset($_POST['submit'])) {
                     </li>
                         
                     <?php 
-                    if(isset($_SESSION['login'])) //message de connexion dans la navbar et bouton de déconnexion
-                    {
-                        echo '<li class="nav-item active align-right">
-                        <span class="nav-link">Vous êtes connecté(e)</span>    
-                        </li>';
-                        echo '<li class="nav-item align-right">
-                        <form action="connexion.php" method="post">                                            
-                            <button type="submit" class="btn btn-info" name="session_fin">Déconnexion</button><br/>                        
-                        </form>
-                        </li>';
-                    }
-                    else
+                    if(!isset($_SESSION['login'])) //message de connexion dans la navbar et bouton de déconnexion
                     {
                         echo '<li class="nav-item ">                        
                             <a class="nav-link" href="inscription.php">S\'inscrire</a>
@@ -101,8 +90,26 @@ if (isset($_POST['submit'])) {
                         </li>
                         <span class="sr-only">(current)</span>';
                     }
+                    
+                    else
+                    {
+                        echo '<li class="nav-item active align-right">
+                        <span class="nav-link">Vous êtes connecté(e)</span>    
+                        </li>';
+                        echo '<li class="nav-item align-right">
+                        <form action="connexion.php" method="post">                                            
+                            <button type="submit" class="btn btn-danger" name="session_fin">Déconnexion</button><br/>                        
+                        </form>
+                        </li>
+                    </ul>
+                    <form method="post" action="profil.php" class="form-inline my-2 my-lg-0">
+                            <button class="btn btn-warning my-2 my-sm-0" type="Modifier">Modifier votre profil</button>
+                      </form>
+                    ';
+
+                    }
                     ?>
-                </ul>
+                
             </div>
         </nav>
     </header>

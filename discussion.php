@@ -68,17 +68,21 @@ if(isset($_POST['submit']))
                     <?php 
                     if(isset($_SESSION['login'])) //message de connexion dans la navbar et bouton de déconnexion
                     {
-                        echo '<li class="nav-item active align-right">
+                        echo '<li class="nav-item active ">
                         <span class="nav-link">Vous êtes connecté(e)</span>    
                         </li>';
-                        echo '<li class="nav-item align-right">
+                        echo '<li class="nav-item ">
                         <form action="connexion.php" method="post">                                            
-                            <button type="submit" class="btn secondary disabled" name="session_fin">Déconnexion</button><br/>                        
+                            <button type="submit" class="btn btn-danger" name="session_fin">Déconnexion</button><br/>                        
                         </form>
-                        </li>';
+                        </li>
+                </ul>
+                        <form method="post" action="profil.php" class="form-inline my-2 my-lg-0">
+                            <button class="btn btn-warning my-2 my-sm-0" type="Modifier">Modifier votre profil</button>
+                      </form>';
                     }
                     ?>
-                </ul>
+                
             </div>
         </nav>
     </header> 

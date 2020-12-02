@@ -1,23 +1,7 @@
 <?php
 
-try
-{
-	$bdd = new PDO('mysql:host=localhost;dbname=discussion;charset=utf8', 'root', '');
-}
-catch (Exception $e)
-{
-        die('Erreur : ' . $e->getMessage());
-}
-
 session_start();
-//déconnexion
-if(isset($_POST['session_fin']))
-{
-    //enlève les variables de la session
-    session_unset();
-    //détruit la session
-    session_destroy();
-}
+
 ?>
 
 <!DOCTYPE html>
@@ -30,7 +14,6 @@ if(isset($_POST['session_fin']))
     <title>Accueil</title>
 </head>
 <body>
-<!--<div class="container-fluid">-->
     
     <header>               
      
@@ -56,7 +39,7 @@ if(isset($_POST['session_fin']))
                         </li>';
                         echo '<li class="nav-item align-right">
                         <form action="connexion.php" method="post">                                            
-                            <button type="submit" class="btn secondary disabled" name="session_fin">Déconnexion</button><br/>                        
+                            <button type="submit" class="btn btn-danger" name="session_fin">Déconnexion</button><br/>                        
                         </form>
                         </li>';
                     }

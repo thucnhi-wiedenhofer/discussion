@@ -1,24 +1,77 @@
 <?php
 
-try
-{
-	$bdd = new PDO('mysql:host=localhost;dbname=discussion;charset=utf8', 'root', '');
-}
-catch (Exception $e)
-{
-        die('Erreur : ' . $e->getMessage());
+session_start();
+
+function valid_data($data){  //fonction pour éviter l'injection de code malveillant
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
 }
 
-session_start();
-//déconnexion
-if(isset($_POST['session_fin']))
+
+if (isset($_POST['modifier']) && isset($_SESSION['id']))  //un adhérent qui s'est connecté veut modifier ses données
+{    
+    $id=$_SESSION['id'];//on fait la requête sur la seul donnée qui ne change pas:id.
+    $pdo = new PDO('mysql:host=localhost;dbname=discussion', 'root', '', array(PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION));
+    /*on prépare une requête pour récupérer les données de l'utilisateur qui veut modifier son profil
+     */
+     $stmt = $pdo->prepare("SELECT * FROM utilisateurs WHERE id = ?");
+     $stmt->execute([$id]);
+     $user = $stmt->fetch();
+     
+         
+            if (empty($user)) //la requête n'a pas aboutie
+            {
+                $error="Il y a une erreur de lecture de vos données!";               
+            }
+            else //succés on conserve dans des variables les infos de l'adhérent pour remplir le formulaire
+            {
+            $login = $user['login'];
+            $password = $user['password'];
+            $_POST = array(); //initialisation de POST à 0
+            }                         
+}
+
+elseif (isset($_POST['update']) && $_SESSION['id']==$_POST['id'] ) { //l'adhérent a modifié ses données, on conserve en variables ces nouvelles données
+    
+    $id= $_SESSION['id'];
+    $login =valid_data($_POST['login']);
+    $new_Password = $_POST['password'];
+    $new_Password = password_hash($new_Password, PASSWORD_DEFAULT);
+
+    if ($_POST['password'] != $_POST['conf-password'])
+    {
+        $error="Les mots de passe ne sont pas identiques!"; //erreur dans le formulaire
+    }        
+
+    else
+    {   $pdo = new PDO('mysql:host=localhost;dbname=discussion', 'root', '', array(PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION));
+        
+        $req = $pdo->prepare('UPDATE utilisateurs  SET login = :login, password = :new_Password WHERE id = :id');
+        $req->execute(array(
+            'login' => $login,
+            'new_Password' => $new_Password,
+            'id' => $id
+            ));
+
+         /* on attribue les nouvelles valeurs au tableau session si la requéte a fonctionné*/
+            if($req && isset($_POST['update']))
+            {
+                $_SESSION['login']=$login;
+                $_SESSION['update']="Ok";
+                header('Location:connexion.php');
+            }
+                
+    }  
+}
+else
 {
-    //enlève les variables de la session
-    session_unset();
-    //détruit la session
-    session_destroy();
+   $error="tous les champs doivent être remplis";
+   
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -56,6 +109,7 @@ if(isset($_POST['session_fin']))
                             <button type="submit" class="btn btn-info" name="session_fin">Déconnexion</button><br/>                        
                         </form>
                         </li>';
+                    
                     }
                     else
                     {
@@ -63,6 +117,7 @@ if(isset($_POST['session_fin']))
                             <a class="nav-link" href="inscription.php">S\'inscrire</a>
                             
                         </li>
+                    
                         <li class="nav-item active">
                             <a class="nav-link" href="connexion.php">Se connecter</a>
                         </li>
@@ -82,7 +137,7 @@ if(isset($_POST['session_fin']))
                 <div class="row">
                 <section class="col-lg-3"></section>
                 <section class="col-lg-6 col-sm-12">
-                    <form action="inscription.php" method="post">
+                    <form action="profil.php" method="post">
                         <fieldset >
                        <!-- envoyer un message d'erreur si login existe déjà ou si password invalide-->
                        <?php if(!empty($error)){echo '<p class="h4 text-warning">'.$error.'</p>'; } ?> 
