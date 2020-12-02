@@ -73,8 +73,9 @@ if(isset($_POST['session_fin']))
             </div>
         </nav>
     </header>
-        <main>
-            <div class="jumbotron2">
+    <main>
+        <div class="jumbotron2 back_img3">
+            <article class="container">
                 <h1>Connexion</h1>
                 <p class="lead">Veuillez vous connecter pour entrer dans la discussion.</p>
                
@@ -103,8 +104,10 @@ if(isset($_POST['session_fin']))
                         </fieldset>
                     </form>
                 </section>
-            </div>
-        </main>
+            </article>
+        </div>
+    </main>
+    <section class="container">
         <footer id="footer">
             <div class="row">
                 <div class="col-lg-12">
@@ -120,7 +123,8 @@ if(isset($_POST['session_fin']))
                 </div>
             </div>
         </footer>
-    </div>
+    </section>
+    
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
 

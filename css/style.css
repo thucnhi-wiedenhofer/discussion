@@ -1,17 +1,10 @@
-#banner {
-    text-align: center;
-    background-image:url("../images/accueil.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;   
-    
-}
 
 /*pour index.php */
 
 .jumbotron2{
     padding: 2rem 0;
     border-radius: 0;
-    background-image: url("../images/index.png");
+   
     background-size: cover;
     background-repeat: no-repeat;
     text-align: center;
@@ -20,27 +13,23 @@
     color:black; 
     
  }
+
+.back_img1{
+  background-image: url("../images/index.png");
+}
+
+.back_img2{
+  background-image: url("../images/sable.png");
+}
+
+.back_img3{
+  background-image: url("../images/plage.png");
+}
+
  @media (min-width: 576px) {
     .jumbotron2 {
       padding: 4rem 2rem;
     }
   }
 
-  /*discussion.php*/
-  .jumbotron3{
-    padding: 2rem 0;
-    border-radius: 0;
-    background-image: url("../images/sable.png");
-    background-size: cover;
-    background-repeat: no-repeat;
-    text-align: center;
-    
-    height:100vh;
-    color:black; 
-    
- }
- @media (min-width: 576px) {
-    .jumbotron3 {
-      padding: 4rem 2rem;
-    }
-  }
+  

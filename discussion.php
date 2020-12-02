@@ -53,7 +53,7 @@ if(isset($_POST['submit']))
     
     <header>               
      
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -82,35 +82,38 @@ if(isset($_POST['submit']))
             </div>
         </nav>
     </header> 
-        
-    <div class="jumbotron3">
-        <main>
-            <h1 class="display-3">Discussion</h1>
-            <p class="lead">Consulter les derniers messages</p><br/>
-            <div class="modal">
-            <form action="discussion.php" method="post">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Posté le</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <textarea class="form-control" name="message" id="message" maxlength="1000" rows="3" 
-                            required  placeholder="Ecrire votre message ici"></textarea> 
-                        </div>
-                        <div class="modal-footer">
-                            
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Envoyer</button>
+    <main>    
+        <div class="jumbotron2 back_img2">
+            <article class="container">
+                <h1 class="display-3">Discussion</h1>
+                <p class="lead">Consulter les derniers messages</p><br/>
+                <div class="modal">
+                    <form action="discussion.php" method="post">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Posté le</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <textarea class="form-control" name="message" id="message" maxlength="1000" rows="3" 
+                                required  placeholder="Ecrire votre message ici"></textarea> 
+                            </div>
+                            <div class="modal-footer">
+                                
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Envoyer</button>
+                            </div>
                         </div>
                     </div>
+                    </form>
                 </div>
-            </form>
-            </div>                
-        </main>  
-    </div>
+            </article> 
+        </div>                   
+    </main>  
+    
+    <section class="container">
         <footer id="footer">
             <div class="row">
                 <div class="col-lg-12">
@@ -126,7 +129,7 @@ if(isset($_POST['submit']))
                 </div>
             </div>
         </footer>
-    
+    </section>
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
 

@@ -111,59 +111,63 @@ if(isset($_SESSION) && !empty($_SESSION)){
             </div>
         </nav>
     </header>
-        <main >
-            <div class="jumbotron2">
+    <main >
+        <div class="jumbotron2 back_img3">
+            <article class="container">
                 <h1>Inscription</h1>
                 <p class="lead">Veuillez vous inscrire pour entrer dans la discussion.</p>
                 <div class="row">
-                <section class="col-lg-3"></section>
-                <section class="col-lg-6 col-sm-12">
-                    <form action="inscription.php" method="post">
-                        <fieldset >
-                       <!-- envoyer un message d'erreur si login existe déjà ou si password invalide-->
-                       <?php if(!empty($error)){echo '<p class="h4 text-warning">'.$error.'</p>'; } ?> 
-                    
-                        <div class="form-group">
-                        <label for="login">Identifiant</label>
-                        <input type="txt" class="form-control" id="login" name="login" 
-                        placeholder="login" required>
-                        </div>   
-
-                        <div class="form-group">
-                        <label for="password">Mot de passse</label>
-                        <input type="password" class="form-control" id="password" 
-                        name="password" placeholder="Password" required>
-                        </div>                       
+                    <section class="col-lg-3"></section>
+                    <section class="col-lg-6 col-sm-12">
+                        <form action="inscription.php" method="post">
+                            <fieldset >
+                        <!-- envoyer un message d'erreur si login existe déjà ou si password invalide-->
+                        <?php if(!empty($error)){echo '<p class="h4 text-warning">'.$error.'</p>'; } ?> 
                         
-                        <div class="form-group">
-                        <label for="conf-password">Confirmer votre mot de passe</label>
-                        <input type="password" class="form-control" id="conf-password" 
-                        name="conf-password" placeholder="Password" required>
-                        </div>                                            
-                                                    
-                        <button type="submit" class="btn btn-secondary" name="submit">Envoyer</button>
-                        </fieldset>
-                    </form>
-                </section>
+                            <div class="form-group">
+                            <label for="login">Identifiant</label>
+                            <input type="txt" class="form-control" id="login" name="login" 
+                            placeholder="login" required>
+                            </div>   
+
+                            <div class="form-group">
+                            <label for="password">Mot de passse</label>
+                            <input type="password" class="form-control" id="password" 
+                            name="password" placeholder="Password" required>
+                            </div>                       
+                            
+                            <div class="form-group">
+                            <label for="conf-password">Confirmer votre mot de passe</label>
+                            <input type="password" class="form-control" id="conf-password" 
+                            name="conf-password" placeholder="Password" required>
+                            </div>                                            
+                                                        
+                            <button type="submit" class="btn btn-secondary" name="submit">Envoyer</button>
+                            </fieldset>
+                        </form>
+                    </section>
                 </div>
-            </div>
-        </main>
+            </article>
+        </div>
+    </main>
         <footer id="footer">
-            <div class="row">
-                <div class="col-lg-12">
-                    <ul class="list-unstyled">
-                    <li class="float-lg-right"><a href="#top">Back to top</a></li>
-                    
-                    <li><a href="https://github.com/thucnhi-wiedenhofer">GitHub</a></li>
-                    
-                    </ul>
-                    <p>Bootstrap style made by <a href="https://thomaspark.co/">Thomas Park</a>.</p>
-                    <p>Code released under the <a href="https://github.com/thomaspark/bootswatch/blob/master/LICENSE">MIT License</a>.</p>
-                    
+            <article class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <ul class="list-unstyled">
+                        <li class="float-lg-right"><a href="#top">Back to top</a></li>
+                        
+                        <li><a href="https://github.com/thucnhi-wiedenhofer">GitHub</a></li>
+                        
+                        </ul>
+                        <p>Bootstrap style made by <a href="https://thomaspark.co/">Thomas Park</a>.</p>
+                        <p>Code released under the <a href="https://github.com/thomaspark/bootswatch/blob/master/LICENSE">MIT License</a>.</p>
+                        
+                    </div>
                 </div>
-            </div>
+            </article>
         </footer>
-    </div>
+    
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
 
