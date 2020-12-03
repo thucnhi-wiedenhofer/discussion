@@ -25,12 +25,11 @@ if(isset($_SESSION) && !empty($_SESSION)){
     $pdo = new PDO('mysql:host=localhost;dbname=discussion', 'root', '', array(PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION));
     /*on prépare une requête pour récupérer les données de l'utilisateur qui a rempli
      le formulaire, afin de vérifier que le login n'existe pas déja dans la table*/
-    $stmt = $pdo->prepare('SELECT * FROM utilisateurs WHERE login=?');
-    $stmt->execute($login);
-    $userExist = $stmt->fetch();
+     $message = $pdo->query("SELECT * FROM utilisateurs WHERE login='$login'")->fetchAll();
+    
      
    
-            if ($userExist)
+            if (!empty($message))
             {
                 $error="Ce login existe déja !";
             }
@@ -52,7 +51,7 @@ if(isset($_SESSION) && !empty($_SESSION)){
 
                 header('Location:connexion.php');
             }
-    mysqli_close($db);
+    
 
 }
 
