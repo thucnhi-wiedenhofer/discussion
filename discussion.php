@@ -11,7 +11,7 @@ if(isset($_POST['session_fin']))
 }
 $pdo = new PDO('mysql:host=localhost;dbname=discussion', 'root', '', array(PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION));
 /*on prépare une requête pour récupérer les messages*/
- $message = $pdo->query("SELECT * FROM messages JOIN utilisateurs ON id_utilisateur=utilisateurs.id ORDER BY date")->fetchAll();
+ $message = $pdo->query("SELECT * FROM messages JOIN utilisateurs ON id_utilisateur=utilisateurs.id ORDER BY date DESC")->fetchAll();
  
 
 //on vérifie que le formulaire a été envoyé
@@ -105,7 +105,7 @@ if(isset($_POST['submit']))
                 echo '</div>';
                 echo '</div>';
               } ?> 
-              </div>     
+              </div><br />     
                         <div class="modal-content p-2">
                             <form action="discussion.php" method="post">
                                 <textarea class="form-control" name="message"  maxlength="140" 
