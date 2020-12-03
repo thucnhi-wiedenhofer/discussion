@@ -9,14 +9,10 @@ if(isset($_POST['session_fin']))
     //détruit la session
     session_destroy();
 }
-try
-{
-	$bdd = new PDO('mysql:host=localhost;dbname=discussion;charset=utf8', 'root', '');
-}
-catch (Exception $e)
-{
-        die('Erreur : ' . $e->getMessage());
-}
+$pdo = new PDO('mysql:host=localhost;dbname=discussion', 'root', '', array(PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION));
+/*on prépare une requête pour récupérer les messages*/
+ $message = $pdo->query("SELECT * FROM messages JOIN utilisateurs ON id_utilisateur=utilisateurs.id ORDER BY date DESC")->fetchAll();
+ 
 
 //on vérifie que le formulaire a été envoyé
 if(isset($_POST['submit']))
@@ -25,12 +21,16 @@ if(isset($_POST['submit']))
     if(isset($_POST['message']) AND !empty($_POST['message']))
     {
         $id_utilisateur=$_SESSION['id'];//puisqu'on est déjà connecté
-        $message=$_POST['message'];//on recupère le message du formulaire
+        $messageSend=$_POST['message'];//on recupère le message du formulaire
+        $date=date("Y.m.d");
 
         //on insère le message dans la base discussion, table messages
-            $mysqli->query("INSERT INTO messages ( message,id_utilisateur,date) 
-            VALUES ('$_POST[message]','$_POST[id_utilisateur]', NOW())") OR DIE ($mysqli->error);
-            echo '<div class="lert alert-dismissible alert-success">Votre message a bien été enregistré.</div>';
+        $sql = "INSERT INTO messages (message, id_utilisateur, date) VALUES (?,?,?)";
+        $stmt= $pdo->prepare($sql);
+        $stmt->execute([$messageSend, $id_utilisateur, $date]);
+
+        header('Location:discussion.php');
+            
     }    
     else
     {
@@ -89,25 +89,27 @@ if(isset($_POST['submit']))
     <main>    
         <div class="jumbotron2 back_img2">
             <article class="container">
-                <h1 class="display-3">Discussion</h1>
-                <p class="lead">Consulter les derniers messages</p><br/>
-                <div class="modal">
-                    <form action="discussion.php" method="post">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Posté le</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
+            <div class='wrapper'>
+                <h1 class='text-center'>
+                    Discussion
+                </h1>
+                <?php foreach($message as $buble){
+                    echo '<div class="speech-bubble" style="background:'.$buble['color'].'; ";>';
+                    echo '<p>';
+                    echo $buble['message'];
+                    echo "<span class='username'>".$buble['login']."</span>";
+                    echo "</p>";
+                    echo "</div>";
+                 };?>
                             <div class="modal-body">
-                                <textarea class="form-control" name="message" id="message" maxlength="1000" rows="3" 
-                                required  placeholder="Ecrire votre message ici"></textarea> 
+                            <form action="discussion.php" method="post">
+                                <textarea class="form-control" name="message"  maxlength="140" 
+                                required  placeholder="Ecrire votre message ici (Max 140 caract.)"></textarea> 
                             </div>
                             <div class="modal-footer">
                                 
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Envoyer</button>
+                                <button type="submit" class="btn btn-secondary" name="submit">Envoyer</button>
+                                </form>
                             </div>
                         </div>
                     </div>

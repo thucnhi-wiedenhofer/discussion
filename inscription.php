@@ -44,10 +44,14 @@ if(isset($_SESSION) && !empty($_SESSION)){
             }
             else
             {
+                 //attribue un code color random à l'utilisateur
+                 $input=array('#F0201A','#E61AF0','#F0ED1A','#65F01A','#1AF0D9','#8F1AF0','#F06E1A','#1A9CF0','#1A4BF0','#F01A44');
+                 $rand_keys = array_rand($input, 2);
+                 $rand_color= $input[$rand_keys[0]] ;
                 /*si le login est nouveau, on insert les données dans la base discussion,table utilisateurs*/
-                $sql = "INSERT INTO utilisateurs (login, password) VALUES (?,?)";
+                $sql = "INSERT INTO utilisateurs (login, password, color) VALUES (?,?,?)";
                 $stmt= $pdo->prepare($sql);
-                $stmt->execute([$login, $password]);
+                $stmt->execute([$login, $password, $rand_color]);
 
                 header('Location:connexion.php');
             }
