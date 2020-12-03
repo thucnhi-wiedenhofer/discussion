@@ -20,7 +20,7 @@ if(isset($_POST['submit']))
     
     if(isset($_POST['message']) AND !empty($_POST['message']))
     {
-        $id_utilisateur=$_SESSION['id'];//puisqu'on est déjà connecté -
+        $id_utilisateur=$_POST['id'];//puisqu'on est déjà connecté -
         $messageSend=$_POST['message'];//on recupère le message du formulaire
         
 
@@ -97,7 +97,9 @@ if(isset($_POST['submit']))
                                 <?php foreach($message as $bubble){               
                                     echo '<div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
                                     <div class="toast-header">';
-                                    echo'<div id="circle" style="background:'.$_SESSION['color'].' "></div>';
+                                    if($id_utilisateur==$_SESSION['id']){
+                                        echo'<div id="circle" style="background:'.$_SESSION['color'].' "></div>';      
+                                    }
                                         echo '<strong class="mr-auto">'.$bubble['login'].'</strong>';
                                             echo '<small>'.$date = date('d/m/Y h:i:s', strtotime($bubble['date'])).'</small>';
                                             echo '<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">';
@@ -121,7 +123,8 @@ if(isset($_POST['submit']))
                             <form action="discussion.php" method="post">
                                 <textarea class="form-control" name="message"  maxlength="140" 
                                 required  placeholder="Ecrire votre message ici (Max 140 caract.)"></textarea></br> 
-                                                
+                                <input type="hidden" name="id" value="<?php echo $_SESSION['id'];// conserve la valeur id dans un champs caché du formulaire
+                        ?>">              
                                 
                                 <button type="submit" class="btn btn-secondary" name="submit">Envoyer</button>
                             </form>
