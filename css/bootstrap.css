@@ -5869,9 +5869,9 @@ a.close.disabled {
 }
 
 .toast {
-  -ms-flex-preferred-size: 350px;
-  flex-basis: 350px;
-  max-width: 350px;
+  -ms-flex-preferred-size: 40vh;
+  flex-basis: 40vh;
+  max-width: 40vh;
   font-size: 0.875rem;
   background-color: rgba(255, 255, 255, 0.85);
   background-clip: padding-box;
@@ -6028,7 +6028,7 @@ a.close.disabled {
   display: flex;
   -ms-flex-direction: column;
   flex-direction: column;
-  width: 50%;
+  width: 100%;
   pointer-events: auto;
   background-color: #fff;
   background-clip: padding-box;

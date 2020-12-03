@@ -90,8 +90,8 @@ if(isset($_POST['submit']))
         <div class="jumbotron2 back_img2">
             <article class="container">
                 <div class="row">    
-                    <div class="col-lg-2"></div>
-                        <div class="col-lg-8 col-sm-12">
+                    <div class="col-lg-4 col-md-3"></div>
+                        <div class="col-lg-4 col-md-6 col-sm-12">
                             <div class="content">
                                 <?php foreach($message as $bubble){               
                                     echo '<div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
@@ -110,6 +110,7 @@ if(isset($_POST['submit']))
                                 } ?> 
                             </div>
                         </div>
+                    <div class="col-lg-4 col-md-3"></div>    
                 </div> 
                 <div class="row">    
                     <div class="col-lg-2"></div>
