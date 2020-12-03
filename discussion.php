@@ -89,6 +89,7 @@ if(isset($_POST['submit']))
     <main>    
         <div class="jumbotron2 back_img2">
             <article class="container">
+            <h1>Discussion en cours</h1><br />
                 <div class="row">    
                     <div class="col-lg-4 col-md-3"></div>
                         <div class="col-lg-4 col-md-6 col-sm-12">
