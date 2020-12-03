@@ -44,9 +44,19 @@
   
   .content {
 	width: 300px;
-	height: 400px;
-	overflow-y: scroll;
-	scrollbar-width: auto;
-	
+	height: 60vh;
+	overflow-y: auto;
+  }
+
+  .content::-webkit-scrollbar {
+    width: 12px;               /* width of the entire scrollbar */
+  }
+  .content::-webkit-scrollbar-track {
+    background: #F3969A;        /* color of the tracking area */
+  }
+  .content::-webkit-scrollbar-thumb {
+    background-color: #FFCE67;    /* color of the scroll thumb */
+    border-radius: 20px;       /* roundness of the scroll thumb */
+    border: 2px solid  #FFCE67;  /* creates padding around scroll thumb */
   }
 

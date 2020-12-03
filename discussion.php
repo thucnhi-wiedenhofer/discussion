@@ -89,23 +89,32 @@ if(isset($_POST['submit']))
     <main>    
         <div class="jumbotron2 back_img2">
             <article class="container">
-                <div class="content">
-            <?php foreach($message as $bubble){               
-                echo '<div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="toast-header">';
-                echo'<div id="circle" style="background:'.$bubble['color'].' "></div>';
-                       echo '<strong class="mr-auto">'.$bubble['login'].'</strong>';
-                        echo '<small>'.$date = date('d/m/Y h:i:s', strtotime($bubble['date'])).'</small>';
-                        echo '<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">';
-                        
-                        echo'</button>';
-                echo '</div>';
-                echo '<div class="toast-body">';
-                   echo $bubble['message'];
-                echo '</div>';
-                echo '</div>';
-              } ?> 
-              </div><br />     
+                <div class="row">    
+                    <div class="col-lg-2"></div>
+                        <div class="col-lg-8 col-sm-12">
+                            <div class="content">
+                                <?php foreach($message as $bubble){               
+                                    echo '<div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+                                    <div class="toast-header">';
+                                    echo'<div id="circle" style="background:'.$bubble['color'].' "></div>';
+                                        echo '<strong class="mr-auto">'.$bubble['login'].'</strong>';
+                                            echo '<small>'.$date = date('d/m/Y h:i:s', strtotime($bubble['date'])).'</small>';
+                                            echo '<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">';
+                                            
+                                            echo'</button>';
+                                    echo '</div>';
+                                    echo '<div class="toast-body">';
+                                    echo $bubble['message'];
+                                    echo '</div>';
+                                    echo '</div>';
+                                } ?> 
+                            </div>
+                        </div>
+                </div> 
+                <div class="row">    
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-8 col-sm-12">
+                    <br />    
                         <div class="modal-content p-2">
                             <form action="discussion.php" method="post">
                                 <textarea class="form-control" name="message"  maxlength="140" 
@@ -115,9 +124,8 @@ if(isset($_POST['submit']))
                                 <button type="submit" class="btn btn-secondary" name="submit">Envoyer</button>
                             </form>
                         </div>
-                        
-                    
-                
+                    </div>
+                </div>    
             </article> 
         </div>                   
     </main>  
