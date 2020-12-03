@@ -83,7 +83,7 @@ if (isset($_POST['submit'])) {
                     <?php 
                     if(!isset($_SESSION['login'])) //message de connexion dans la navbar et bouton de déconnexion
                     {
-                        echo '<li class="nav-item ">                        
+                        echo '<li class="nav-item">                        
                             <a class="nav-link" href="inscription.php">S\'inscrire</a>
                             
                         </li>

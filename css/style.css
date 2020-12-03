@@ -60,3 +60,7 @@
     border: 2px solid  #FFCE67;  /* creates padding around scroll thumb */
   }
 
+  a.btn.btn-secondary.btn-lg{
+    margin: 2rem;
+  }
+

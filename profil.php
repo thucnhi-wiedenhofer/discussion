@@ -10,30 +10,10 @@ function valid_data($data){  //fonction pour éviter l'injection de code malveil
 }
 
 
-if (isset($_POST['modifier']) && isset($_SESSION['id']))  //un adhérent qui s'est connecté veut modifier ses données
-{    
-    $id=$_SESSION['id'];//on fait la requête sur la seul donnée qui ne change pas c'est à dire id.
-    $pdo = new PDO('mysql:host=localhost;dbname=discussion', 'root', '', array(PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION));
-    /*on prépare une requête pour récupérer les données de l'utilisateur qui veut modifier son profil
-     */
-     $stmt = $pdo->prepare("SELECT * FROM utilisateurs WHERE id = ?");
-     $stmt->execute([$id]);
-     $user = $stmt->fetch();
-     
-         
-            if (empty($user)) //la requête n'a pas aboutie
-            {
-                $error="Il y a une erreur de lecture de vos données!";               
-            }
-            else //succés on conserve dans des variables les infos de l'adhérent pour remplir le formulaire
-            {
-            $login = $user['login'];
-            $password = $user['password'];
-            $_POST = array(); //initialisation de POST à 0
-            }                         
-}
-
-elseif (isset($_POST['update']) && $_SESSION['id']==$_POST['id'] ) { //l'adhérent a modifié ses données, on conserve en variables ces nouvelles données
+ //un adhérent qui s'est connecté veut modifier ses données
+ if(isset($_POST['update']) && $_SESSION['id']==$_POST['id'] )
+  {     
+    //l'adhérent a modifié ses données, on conserve en variables ces nouvelles données
     
     $id= $_SESSION['id'];
     $login =valid_data($_POST['login']);
@@ -61,13 +41,33 @@ elseif (isset($_POST['update']) && $_SESSION['id']==$_POST['id'] ) { //l'adhére
                 $_SESSION['login']=$login;
                 $_SESSION['update']="Ok";
                 header('Location:connexion.php');
+            }           
+    }
+  }elseif(isset($_SESSION['id'])){
+    $id=$_SESSION['id'];//on fait la requête sur la seul donnée qui ne change pas c'est à dire id.
+    $pdo = new PDO('mysql:host=localhost;dbname=discussion', 'root', '', array(PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION));
+    /*on prépare une requête pour récupérer les données de l'utilisateur qui veut modifier son profil
+     */
+     $stmt = $pdo->prepare("SELECT * FROM utilisateurs WHERE id = ?");
+     $stmt->execute([$id]);
+     $user = $stmt->fetch();
+     
+         
+            if (empty($user)) //la requête n'a pas aboutie
+            {
+                $error="Il y a une erreur de lecture de vos données!";               
             }
-                
-    }  
+            else //succés on conserve dans des variables les infos de l'adhérent pour remplir le formulaire
+            {
+            $login = $user['login'];
+            $password = $user['password'];
+            $_POST = array(); //initialisation de POST à 0
+            }                         
 }
+   
 else
 {
-   $error="tous les champs doivent être remplis";
+   $error="vous devez être connecté pour cela";
    
 }
 ?>
@@ -94,35 +94,27 @@ else
 
             <div class="collapse navbar-collapse" id="navbarColor02">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
+                    <li class="nav-item ">
                         <a class="nav-link" href="index.php">Home</a>
                     </li>
                         
                     <?php 
                     if(isset($_SESSION['login'])) //message de connexion dans la navbar et bouton de déconnexion
                     {
+                        echo'<li class="nav-item align-right">
+                        <a class="nav-link" href="discussion.php">Discussion</a>
+                        </li>';
                         echo '<li class="nav-item active align-right">
                         <span class="nav-link">Vous êtes connecté(e)</span>    
                         </li>';
                         echo '<li class="nav-item align-right">
                         <form action="connexion.php" method="post">                                            
-                            <button type="submit" class="btn btn-info" name="session_fin">Déconnexion</button><br/>                        
+                            <button type="submit" class="btn btn-danger" name="session_fin">Déconnexion</button><br/>                        
                         </form>
                         </li>';
                     
                     }
-                    else
-                    {
-                        echo '<li class="nav-item ">                        
-                            <a class="nav-link" href="inscription.php">S\'inscrire</a>
-                            
-                        </li>
                     
-                        <li class="nav-item active">
-                            <a class="nav-link" href="connexion.php">Se connecter</a>
-                        </li>
-                        <span class="sr-only">(current)</span>';
-                    }
                     ?>
                 </ul>
             </div>
@@ -131,16 +123,16 @@ else
     <main>
         <div class="jumbotron2 back_img3">
             <article class="container">
-                <h1>Connexion</h1>
-                <p class="lead">Veuillez vous connecter pour entrer dans la discussion.</p>
+                <h1>Modifier votre profil</h1>
+                   <!-- envoyer un message d'erreur si login existe déjà ou si password invalide-->
+                   <?php if(!empty($error)){echo '<p class="h4 text-warning">'.$error.'</p>'; } ?>
                
                 <div class="row">
                 <section class="col-lg-3"></section>
                 <section class="col-lg-6 col-sm-12">
                     <form action="profil.php" method="post">
                         <fieldset >
-                       <!-- envoyer un message d'erreur si login existe déjà ou si password invalide-->
-                       <?php if(!empty($error)){echo '<p class="h4 text-warning">'.$error.'</p>'; } ?> 
+                      
                     
                         <div class="form-group">
                         <label for="login">Identifiant</label>
@@ -161,7 +153,7 @@ else
                         <input type="hidden" name="id" value="<?php echo (int)$id;// conserve la valeur id dans un champs caché du formulaire
                         ?>">                           
                                                                     
-                        <button type="submit" class="btn btn-secondary" name="submit">Valider</button>
+                        <button type="submit" class="btn btn-secondary" name="update">Valider</button>
                         </fieldset>
                     </form>
                 </section>
