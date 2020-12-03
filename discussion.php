@@ -97,7 +97,7 @@ if(isset($_POST['submit']))
                                 <?php foreach($message as $bubble){               
                                     echo '<div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
                                     <div class="toast-header">';
-                                    echo'<div id="circle" style="background:'.$bubble['color'].' "></div>';
+                                    echo'<div id="circle" style="background:'.$_SESSION['color'].' "></div>';
                                         echo '<strong class="mr-auto">'.$bubble['login'].'</strong>';
                                             echo '<small>'.$date = date('d/m/Y h:i:s', strtotime($bubble['date'])).'</small>';
                                             echo '<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">';
