@@ -49,7 +49,7 @@
   }
 
   .content::-webkit-scrollbar {
-    width: 8px;               /* width of the entire scrollbar */
+    width: 6px;               /* width of the entire scrollbar */
   }
   .content::-webkit-scrollbar-track {
     background: #F3969A;        /* color of the tracking area */
