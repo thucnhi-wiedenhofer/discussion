@@ -12,7 +12,7 @@ function valid_data($data){  //fonction pour éviter l'injection de code malveil
 
 if (isset($_POST['modifier']) && isset($_SESSION['id']))  //un adhérent qui s'est connecté veut modifier ses données
 {    
-    $id=$_SESSION['id'];//on fait la requête sur la seul donnée qui ne change pas:id.
+    $id=$_SESSION['id'];//on fait la requête sur la seul donnée qui ne change pas c'est à dire id.
     $pdo = new PDO('mysql:host=localhost;dbname=discussion', 'root', '', array(PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION));
     /*on prépare une requête pour récupérer les données de l'utilisateur qui veut modifier son profil
      */

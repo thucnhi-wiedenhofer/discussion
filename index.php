@@ -32,7 +32,7 @@ session_start();
                     </li>
                           
                     <?php 
-                    if(isset($_SESSION['login'])) //message de connexion dans la navbar et bouton de déconnexion
+                    if(isset($_SESSION['login'])) //message de connexion dans la navbar et bouton de déconnexion -
                     {
                         echo '<li class="nav-item active align-right">
                         <span class="nav-link">Vous êtes connecté(e)</span>    

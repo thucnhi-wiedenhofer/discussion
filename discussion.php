@@ -20,7 +20,7 @@ if(isset($_POST['submit']))
     
     if(isset($_POST['message']) AND !empty($_POST['message']))
     {
-        $id_utilisateur=$_SESSION['id'];//puisqu'on est déjà connecté
+        $id_utilisateur=$_SESSION['id'];//puisqu'on est déjà connecté -
         $messageSend=$_POST['message'];//on recupère le message du formulaire
         $date=date("Y.m.d");
 
