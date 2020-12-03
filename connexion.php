@@ -9,7 +9,7 @@ if(isset($_POST['session_fin']))
     session_destroy();
 }
     
-/*routine de validation des données*/
+/*routine de validation des données - */
     
 //connexion en tant que membre:
 if (isset($_POST['submit'])) {
