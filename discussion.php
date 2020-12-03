@@ -89,18 +89,21 @@ if(isset($_POST['submit']))
     <main>    
         <div class="jumbotron2 back_img2">
             <article class="container">
-            <div class='wrapper'>
-                <h1 class='text-center'>
-                    Discussion
-                </h1>
-                <?php foreach($message as $buble){
-                    echo '<div class="speech-bubble" style="background:'.$buble['color'].'; ";>';
-                    echo '<p>';
-                    echo $buble['message'];
-                    echo "<span class='username'>".$buble['login']."</span>";
-                    echo "</p>";
-                    echo "</div>";
-                 };?>
+            <?php foreach($message as $buble){               
+                echo '<div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header">';
+                echo'<div id="circle" style="background:'.$buble['color'].' "></div>';
+                       echo '<strong class="mr-auto">'.$buble['login'].'</strong>';
+                        echo '<small>'.$date = date('d/m/Y', strtotime($buble['date'])).'</small>';
+                        echo '<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">';
+                        echo'<span aria-hidden="true">&times;</span>';
+                        echo'</button>';
+                echo '</div>';
+                echo '<div class="toast-body">';
+                   echo $buble['message'];
+                echo '</div>';
+                echo '</div>';
+              } ?>
                             <div class="modal-body">
                             <form action="discussion.php" method="post">
                                 <textarea class="form-control" name="message"  maxlength="140" 
