@@ -97,7 +97,7 @@ if(isset($_POST['submit']))
                                 <?php foreach($message as $bubble){               
                                     echo '<div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
                                     <div class="toast-header">';
-                                    if($id_utilisateur==$_SESSION['id']){
+                                    if($bubble['id_utilisateur']==$_SESSION['id']){
                                         echo'<div id="circle" style="background:'.$_SESSION['color'].' "></div>';      
                                     }
                                         echo '<strong class="mr-auto">'.$bubble['login'].'</strong>';
