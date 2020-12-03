@@ -11,7 +11,7 @@ if(isset($_POST['session_fin']))
 }
 $pdo = new PDO('mysql:host=localhost;dbname=discussion', 'root', '', array(PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION));
 /*on prépare une requête pour récupérer les messages*/
- $message = $pdo->query("SELECT * FROM messages JOIN utilisateurs ON id_utilisateur=utilisateurs.id ORDER BY date DESC")->fetchAll();
+ $message = $pdo->query("SELECT * FROM messages JOIN utilisateurs ON id_utilisateur=utilisateurs.id ORDER BY date")->fetchAll();
  
 
 //on vérifie que le formulaire a été envoyé
@@ -22,12 +22,12 @@ if(isset($_POST['submit']))
     {
         $id_utilisateur=$_SESSION['id'];//puisqu'on est déjà connecté -
         $messageSend=$_POST['message'];//on recupère le message du formulaire
-        $date=date("Y.m.d");
+        
 
         //on insère le message dans la base discussion, table messages
-        $sql = "INSERT INTO messages (message, id_utilisateur, date) VALUES (?,?,?)";
+        $sql = "INSERT INTO messages (message, id_utilisateur, date) VALUES (?,?,NOW())";
         $stmt= $pdo->prepare($sql);
-        $stmt->execute([$messageSend, $id_utilisateur, $date]);
+        $stmt->execute([$messageSend, $id_utilisateur]);
 
         header('Location:discussion.php');
             
@@ -45,7 +45,7 @@ if(isset($_POST['submit']))
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/style.css">
     <title>Discussion</title>
 </head>
@@ -89,35 +89,35 @@ if(isset($_POST['submit']))
     <main>    
         <div class="jumbotron2 back_img2">
             <article class="container">
-            <?php foreach($message as $buble){               
+                <div class="content">
+            <?php foreach($message as $bubble){               
                 echo '<div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-header">';
-                echo'<div id="circle" style="background:'.$buble['color'].' "></div>';
-                       echo '<strong class="mr-auto">'.$buble['login'].'</strong>';
-                        echo '<small>'.$date = date('d/m/Y', strtotime($buble['date'])).'</small>';
+                echo'<div id="circle" style="background:'.$bubble['color'].' "></div>';
+                       echo '<strong class="mr-auto">'.$bubble['login'].'</strong>';
+                        echo '<small>'.$date = date('d/m/Y h:i:s', strtotime($bubble['date'])).'</small>';
                         echo '<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">';
-                        echo'<span aria-hidden="true">&times;</span>';
+                        
                         echo'</button>';
                 echo '</div>';
                 echo '<div class="toast-body">';
-                   echo $buble['message'];
+                   echo $bubble['message'];
                 echo '</div>';
                 echo '</div>';
-              } ?>
-                            <div class="modal-body">
+              } ?> 
+              </div>     
+                        <div class="modal-content p-2">
                             <form action="discussion.php" method="post">
                                 <textarea class="form-control" name="message"  maxlength="140" 
-                                required  placeholder="Ecrire votre message ici (Max 140 caract.)"></textarea> 
-                            </div>
-                            <div class="modal-footer">
+                                required  placeholder="Ecrire votre message ici (Max 140 caract.)"></textarea></br> 
+                                                
                                 
                                 <button type="submit" class="btn btn-secondary" name="submit">Envoyer</button>
-                                </form>
-                            </div>
+                            </form>
                         </div>
-                    </div>
-                    </form>
-                </div>
+                        
+                    
+                
             </article> 
         </div>                   
     </main>  
@@ -141,6 +141,7 @@ if(isset($_POST['submit']))
     </section>
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.bundle.min.js"></script>
-
+    <script src="js/scroll.js"></script>
+    
 </body>
 </html>
