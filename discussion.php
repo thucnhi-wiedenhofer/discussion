@@ -20,7 +20,7 @@ if(isset($_POST['submit']))
     
     if(isset($_POST['message']) AND !empty($_POST['message']))
     {
-        $id_utilisateur=$_POST['id'];//puisqu'on est déjà connecté -
+        $id_utilisateur=$_SESSION['id'];//puisqu'on est déjà connecté -
         $messageSend=$_POST['message'];//on recupère le message du formulaire
         
 
@@ -122,9 +122,7 @@ if(isset($_POST['submit']))
                         <div class="modal-content p-2">
                             <form action="discussion.php" method="post">
                                 <textarea class="form-control" name="message"  maxlength="140" 
-                                required  placeholder="Ecrire votre message ici (Max 140 caract.)"></textarea></br> 
-                                <input type="hidden" name="id" value="<?php echo $_SESSION['id'];// conserve la valeur id dans un champs caché du formulaire
-                        ?>">              
+                                required  placeholder="Ecrire votre message ici (Max 140 caract.)"></textarea></br>        
                                 
                                 <button type="submit" class="btn btn-secondary" name="submit">Envoyer</button>
                             </form>
