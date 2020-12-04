@@ -14,7 +14,7 @@ if(isset($_SESSION) && !empty($_SESSION)){
                 $data = htmlspecialchars($data);/*enlève les balises html comme ""<>...*/
                 return $data;
             }
-    /*on récupère les valeurs login ,password, prenom, nom du formulaire et on y applique ,
+    /*on récupère les valeurs login ,password du formulaire et on y applique ,
      les filtres de la fonction valid_data*/
     $login = valid_data($_POST["login"]);
     $password = $_POST["password"];

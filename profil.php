@@ -38,6 +38,10 @@ function valid_data($data){  //fonction pour éviter l'injection de code malveil
          /* on attribue les nouvelles valeurs au tableau session si la requéte a fonctionné*/
             if($req && isset($_POST['update']))
             {
+                $sql = "DELETE FROM connected WHERE id_connected =  :id_connected";
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(':id_connected', $_SESSION['id'], PDO::PARAM_INT);   
+                $stmt->execute();
                 $_SESSION['login']=$login;
                 $_SESSION['update']="Ok";
                 header('Location:connexion.php');
