@@ -117,7 +117,7 @@ if(isset($_POST['submit']))
                                     foreach($membres as $connected){
                                     echo'<svg height="10" width="10">
                                     <circle r="2" cx="5" cy="5" stroke="'.$connected['color'].'" stroke-width="3" fill="'.$connected['color'].'" />
-                                    </svg> '.$connected['login_connected'];  
+                                    </svg> '.$connected['login_connected'].' ';  
                                     } 
                                 }?>
                                 
