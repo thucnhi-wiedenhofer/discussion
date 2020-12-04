@@ -6,7 +6,8 @@ $pdo = new PDO('mysql:host=localhost;dbname=discussion', 'root', '', array(PDO::
 $id_connected=$_SESSION['id'];
 //déconnexion
 if(isset($_POST['session_fin']))
-{
+{   
+    /* on enléve les données de l'utilisateur dans la table connected */
     $sql = "DELETE FROM connected WHERE id_connected =  :id_connected";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':id_connected', $id_connected, PDO::PARAM_INT);   
@@ -25,7 +26,7 @@ if(isset($_POST['session_fin']))
 //on vérifie que le formulaire a été envoyé
 if(isset($_POST['submit']))
 {
-    
+    //on vérifie que la variable message contient bien une string
     if(isset($_POST['message']) AND !empty($_POST['message']))
     {
         $id_utilisateur=$_SESSION['id'];//puisqu'on est déjà connecté -
@@ -99,52 +100,56 @@ if(isset($_POST['submit']))
             <article class="container">
             
                 <div class="row"> 
-                <section class="col-lg-2 col-md-2 col-sm-12"></section>
-                <section class="col-lg-8 col-md-8 col-sm-12">
-                    <h1>Discussion en cours</h1><br />
-                            
-                                    
-                            <?php 
-                                $count = $pdo->query("SELECT COUNT(*) FROM connected")->fetchColumn();
-                                $membres = $pdo->query("SELECT  login_connected, color FROM connected LIMIT 10")->fetchAll(); ?>
-                            
-                            <p class="lead">Il y a actuellement: <?php if($count>1){echo '<span class="badge badge-dark">'.$count.'</span> Membres connectés';}
-                                else{echo '<span class="badge badge-dark">'.$count.'</span> membre connecté';} ?>
-                                </p>
-                            
-                            <?php 
-                                if($membres){
-                                    foreach($membres as $connected){
-                                    echo'<svg height="10" width="10">
-                                    <circle r="2" cx="5" cy="5" stroke="'.$connected['color'].'" stroke-width="3" fill="'.$connected['color'].'" />
-                                    </svg> '.$connected['login_connected'].' ';  
-                                    } 
-                                }?>
+                    <section class="col-lg-2 col-md-2 col-sm-12"></section>
+                    <section class="col-lg-8 col-md-8 col-sm-12">
+                        <h1>Discussion en cours</h1><br />
                                 
-                </section>
-              
-                <section class="col-lg-2 col-md-2 col-sm-12"></section>
+                                <!-- On compte combien d'utilisateurs sont actuellement connectés dans la table connected -->       
+                                <?php 
+                                    $count = $pdo->query("SELECT COUNT(*) FROM connected")->fetchColumn();
+                                    $membres = $pdo->query("SELECT  login_connected, color FROM connected ")->fetchAll();
+                                    //on récupére la liste des utilisateurs connectés et leurs couleurs respectives
+                                    ?>
+                                    <!-- on affiche le total de connectés -->
+                                <p class="lead">Il y a actuellement: <?php if($count>1){echo '<span class="badge badge-dark">'.$count.'</span> Membres connectés';}
+                                    else{echo '<span class="badge badge-dark">'.$count.'</span> membre connecté';} ?>
+                                    </p>
+                                    <!-- on affiche la liste des connectés avec une boucle -->
+                                <?php 
+                                    if($membres){
+                                        foreach($membres as $connected){
+                                        echo'<svg height="10" width="10">
+                                        <circle r="2" cx="5" cy="5" stroke="'.$connected['color'].'" stroke-width="3" fill="'.$connected['color'].'" />
+                                        </svg> '.$connected['login_connected'].' ';  
+                                        } 
+                                    }?>
+                                    
+                    </section>
+                
+                    <section class="col-lg-2 col-md-2 col-sm-12"></section>
                 </div>
 
                 <div class="row">
-                        <div class="col-lg-4 col-md-4 col-sm-12">  
-                        </div>
+                        <section class="col-lg-4 col-md-4 col-sm-12">  
+                                </section>
                     
-                        <div class="col-lg-4 col-md-4 col-sm-12">         
+                        <section class="col-lg-4 col-md-4 col-sm-12">         
                             
                             <div class="content">
                             <br /> 
-                                <?php foreach($message as $bubble){               
+                                <?php 
+                                    // Affichage des messages avec login des utilisateurs, couleur et date
+                                
+                                    foreach($message as $bubble){               
                                     echo '<div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
                                     <div class="toast-header">';
                                     if(isset($bubble['color']) && !empty($bubble['color'])){
                                         echo'<div id="circle" style="background:'.$bubble['color'].' "></div>';      
                                     }
                                         echo '<strong class="mr-auto">'.$bubble['login'].'</strong>';
+                                            //mise au format européen de la date et heure
                                             echo '<small>'.$date = date('d/m/Y h:i:s', strtotime($bubble['date'])).'</small>';
-                                            echo '<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">';
                                             
-                                            echo'</button>';
                                     echo '</div>';
                                     echo '<div class="toast-body">';
                                     echo $bubble['message'];
@@ -152,13 +157,14 @@ if(isset($_POST['submit']))
                                     echo '</div>';
                                 } ?> 
                             </div>
-                        </div>
-                    <div class="col-lg-4 col-md-4 col-sm-12"></div>    
+                        </section>
+                        <section class="col-lg-4 col-md-4 col-sm-12"></section>    
                 </div> 
                 <div class="row">    
-                    <div class="col-lg-2 col-sm-2"></div>
-                    <div class="col-lg-8 col-sm-8">
-                        <br />    
+                    <section class="col-lg-2 col-sm-2"></section>
+                    <section class="col-lg-8 col-sm-8">
+                        <br />  
+                        <!-- formulaire pour poster message -->  
                         <div class="modal-content  p-2">
                             <form action="discussion.php" method="post">
                                 <textarea class="form-control" name="message"  maxlength="140" 
@@ -167,8 +173,8 @@ if(isset($_POST['submit']))
                                 <button type="submit" class="btn btn-secondary" name="submit">Envoyer</button>
                             </form>
                         </div>
-                    </div>
-                    <div class="col-lg-2 col-sm-2"></div>
+                    </section>
+                    <section class="col-lg-2 col-sm-2"></section>
                 </div>    
             </article> 
         </div>                   

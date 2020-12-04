@@ -84,7 +84,7 @@ else
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://bootswatch.com/4/minty/bootstrap.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/style.css">
     <title>profil</title>
 </head>
@@ -143,7 +143,7 @@ else
                         <div class="form-group">
                         <label for="login">Identifiant</label>
                         <input type="txt" class="form-control" id="login" name="login" 
-                        value="<?php echo $login; ?>" required>
+                        value="<?php if($login){ echo $login;} ?>" required>
                         </div>   
 
                         <div class="form-group">
@@ -156,7 +156,7 @@ else
                         <input type="password" class="form-control" id="conf-password" 
                         name="conf-password" placeholder="Mot de passe identique" required>
                         </div>                                            
-                        <input type="hidden" name="id" value="<?php echo (int)$id;// conserve la valeur id dans un champs caché du formulaire
+                        <input type="hidden" name="id" value="<?php if($login){echo (int)$id;}// conserve la valeur id dans un champs caché du formulaire
                         ?>">                           
                                                                     
                         <button type="submit" class="btn btn-secondary" name="update">Valider</button>
