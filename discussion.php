@@ -1,17 +1,25 @@
 <?php
 
 session_start();
+
+$pdo = new PDO('mysql:host=localhost;dbname=discussion', 'root', '', array(PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION));
+$id_connected=$_SESSION['id'];
 //déconnexion
 if(isset($_POST['session_fin']))
 {
+    $sql = "DELETE FROM connected WHERE id_connected =  :id_connected";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':id_connected', $id_connected, PDO::PARAM_INT);   
+    $stmt->execute();
+
     //enlève les variables de la session
     session_unset();
     //détruit la session
     session_destroy();
 }
-$pdo = new PDO('mysql:host=localhost;dbname=discussion', 'root', '', array(PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION));
+
 /*on prépare une requête pour récupérer les messages*/
- $message = $pdo->query("SELECT * FROM messages JOIN utilisateurs ON id_utilisateur=utilisateurs.id ORDER BY date DESC")->fetchAll();
+ $message = $pdo->query("SELECT id_utilisateur, message, date, login, login_connected, color FROM messages LEFT JOIN utilisateurs ON id_utilisateur=utilisateurs.id LEFT JOIN connected ON id_utilisateur=id_connected ORDER BY date DESC")->fetchAll();
  
 
 //on vérifie que le formulaire a été envoyé
@@ -89,16 +97,48 @@ if(isset($_POST['submit']))
     <main>    
         <div class="jumbotron2 back_img2">
             <article class="container">
-            <h1>Discussion en cours</h1><br />
-                <div class="row">    
-                    <div class="col-lg-4 col-md-3"></div>
-                        <div class="col-lg-4 col-md-6 col-sm-12">
+            
+                <div class="row"> 
+                <section class="col-lg-2 col-md-2 col-sm-12"></section>
+                <section class="col-lg-8 col-md-8 col-sm-12">
+                    <h1>Discussion en cours</h1><br />
+                            
+                                    
+                            <?php 
+                                $count = $pdo->query("SELECT COUNT(*) FROM connected")->fetchColumn();
+                                $membres = $pdo->query("SELECT  login_connected, color FROM connected LIMIT 10")->fetchAll(); ?>
+                            
+                            <p class="lead">Il y a actuellement: <?php if($count>1){echo '<span class="badge badge-dark">'.$count.'</span> Membres connectés';}
+                                else{echo '<span class="badge badge-dark">'.$count.'</span> membre connecté';} ?>
+                                </p>
+                            
+                            <?php 
+                                if($membres){
+                                    foreach($membres as $connected){
+                                    echo'<svg height="10" width="10">
+                                    <circle r="2" cx="5" cy="5" stroke="'.$connected['color'].'" stroke-width="3" fill="'.$connected['color'].'" />
+                                    </svg> '.$connected['login_connected'];  
+                                    } 
+                                }?>
+                                
+                </section>
+              
+                <section class="col-lg-2 col-md-2 col-sm-12"></section>
+                </div>
+
+                <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-12">  
+                        </div>
+                    
+                        <div class="col-lg-4 col-md-4 col-sm-12">         
+                            
                             <div class="content">
+                            <br /> 
                                 <?php foreach($message as $bubble){               
                                     echo '<div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
                                     <div class="toast-header">';
-                                    if($bubble['id_utilisateur']==$_SESSION['id']){
-                                        echo'<div id="circle" style="background:'.$_SESSION['color'].' "></div>';      
+                                    if(isset($bubble['color']) && !empty($bubble['color'])){
+                                        echo'<div id="circle" style="background:'.$bubble['color'].' "></div>';      
                                     }
                                         echo '<strong class="mr-auto">'.$bubble['login'].'</strong>';
                                             echo '<small>'.$date = date('d/m/Y h:i:s', strtotime($bubble['date'])).'</small>';
@@ -113,13 +153,13 @@ if(isset($_POST['submit']))
                                 } ?> 
                             </div>
                         </div>
-                    <div class="col-lg-4 col-md-3"></div>    
+                    <div class="col-lg-4 col-md-4 col-sm-12"></div>    
                 </div> 
                 <div class="row">    
-                    <div class="col-lg-2"></div>
-                    <div class="col-lg-8 col-sm-12">
-                    <br />    
-                        <div class="modal-content p-2">
+                    <div class="col-lg-2 col-sm-2"></div>
+                    <div class="col-lg-8 col-sm-8">
+                        <br />    
+                        <div class="modal-content  p-2">
                             <form action="discussion.php" method="post">
                                 <textarea class="form-control" name="message"  maxlength="140" 
                                 required  placeholder="Ecrire votre message ici (Max 140 caract.)"></textarea></br>        
@@ -128,6 +168,7 @@ if(isset($_POST['submit']))
                             </form>
                         </div>
                     </div>
+                    <div class="col-lg-2 col-sm-2"></div>
                 </div>    
             </article> 
         </div>                   

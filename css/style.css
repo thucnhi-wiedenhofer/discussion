@@ -9,7 +9,7 @@
     background-repeat: no-repeat;
     text-align: center;
     
-    height:100vh;
+    min-height:100vh;
     color:black; 
     
  }
@@ -40,6 +40,15 @@
 	-moz-border-radius: 25px;
 	border-radius: 25px;
 	margin-right: 20px;
+  }
+
+  #little-circle{
+    width: 10px;
+    height: 10px;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    border-radius: 25px;
+    margin-right: 10px;
   }
   
   .content {

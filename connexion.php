@@ -1,9 +1,16 @@
 <?php
 session_start();
 //déconnexion
+$pdo = new PDO('mysql:host=localhost;dbname=discussion', 'root', '', array(PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION));
+
 if(isset($_POST['session_fin']))
 {
     //enlève les variables de la session
+    $sql = "DELETE FROM connected WHERE id_connected =  :id_connected";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':id_connected', $_SESSION['id'], PDO::PARAM_INT);   
+    $stmt->execute();
+
     session_unset();
     //détruit la session
     session_destroy();
@@ -24,7 +31,7 @@ if (isset($_POST['submit'])) {
         $login = valid_data($_POST["login"]);
         $password = $_POST["password"];
             
-        $pdo = new PDO('mysql:host=localhost;dbname=discussion', 'root', '', array(PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION));
+       
     /*on prépare une requête pour récupérer les données de l'utilisateur qui a rempli
      le formulaire, afin de vérifier que le login n'existe pas déja dans la table*/
      $stmt = $pdo->prepare("SELECT * FROM utilisateurs WHERE login = ?");
@@ -42,11 +49,27 @@ if (isset($_POST['submit'])) {
                 //attribue un code color random à l'utilisateur
                 $input=array('#F0201A','#E61AF0','#F0ED1A','#65F01A','#1AF0D9','#8F1AF0','#F06E1A','#1A9CF0','#1A4BF0','#F01A44');
                 $rand_keys = array_rand($input, 2);
-                $rand_color= $input[$rand_keys[0]] ;
-                $_SESSION['color']=$rand_color;
-                $_SESSION['login']=$user['login'];
-                $_SESSION['id']=$user['id']; 
-                header('location:discussion.php');                                 
+                $rand_color = $input[$rand_keys[0]] ;
+                $_SESSION['color'] = $rand_color;
+                $_SESSION['login'] = $user['login'];
+                $_SESSION['id'] = $user['id'];
+                $id_connected = $user['id'];
+
+                /*interface connected
+                on va enregistrer l'utilisateur connecté dans une table connected s'il ne l'est pas déja(oubli de fin de session)
+                */
+                
+                $stmt = $pdo->prepare("SELECT * FROM connected WHERE id_connected = ?");
+                $stmt->execute([$_SESSION['id']]);
+                $user = $stmt->fetch();
+
+                if(empty($user)){
+                    $sql = "INSERT INTO connected (login_connected, color, id_connected) VALUES (?,?,?)";
+                    $stmt= $pdo->prepare($sql);
+                    $stmt->execute([$login, $rand_color, $id_connected]);
+                }
+                    header('location:discussion.php');     
+                                              
             } 
             else //si password différent
             {
