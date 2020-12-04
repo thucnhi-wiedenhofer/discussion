@@ -12,7 +12,7 @@ function valid_data($data){  //fonction pour éviter l'injection de code malveil
 
  //un adhérent qui s'est connecté veut modifier ses données
  if(isset($_POST['update']) && $_SESSION['id']==$_POST['id'] )
-  {     
+{     
     //l'adhérent a modifié ses données, on conserve en variables ces nouvelles données
     
     $id= $_SESSION['id'];
@@ -35,7 +35,8 @@ function valid_data($data){  //fonction pour éviter l'injection de code malveil
             'id' => $id
             ));
 
-         /* on attribue les nouvelles valeurs au tableau session si la requéte a fonctionné*/
+         /* on attribue les nouvelles valeurs au tableau session si la requéte a fonctionné 
+         et on efface de la table connected les anciennes valeurs*/
             if($req && isset($_POST['update']))
             {
                 $sql = "DELETE FROM connected WHERE id_connected =  :id_connected";
