@@ -48,7 +48,8 @@ function valid_data($data){  //fonction pour éviter l'injection de code malveil
                 header('Location:connexion.php');
             }           
     }
-  }elseif(isset($_SESSION['id'])){
+  }
+  elseif (isset($_POST['modifier']) && isset($_SESSION['id'])){
     $id=$_SESSION['id'];//on fait la requête sur la seul donnée qui ne change pas c'est à dire id.
     $pdo = new PDO('mysql:host=localhost;dbname=discussion', 'root', '', array(PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION));
     /*on prépare une requête pour récupérer les données de l'utilisateur qui veut modifier son profil
@@ -72,7 +73,7 @@ function valid_data($data){  //fonction pour éviter l'injection de code malveil
    
 else
 {
-   $error="vous devez être connecté pour cela";
+    header('Location:connexion.php');
    
 }
 ?>
@@ -146,7 +147,7 @@ else
                         </div>   
 
                         <div class="form-group">
-                        <label for="password">Mot de passse</label>
+                        <label for="password">Mot de passe</label>
                         <input type="password" class="form-control" id="password" 
                         name="password" placeholder="Entrer un nouveau mot de passe" required>
                         </div>                       

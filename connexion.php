@@ -132,7 +132,7 @@ if (isset($_POST['submit'])) {
                         </li>
                     </ul>
                     <form method="post" action="profil.php" class="form-inline my-2 my-lg-0">
-                            <button class="btn btn-warning my-2 my-sm-0" type="Modifier">Modifier votre profil</button>
+                            <button type="submit" class="btn btn-warning my-2 my-sm-0" name="modifier">Modifier votre profil</button>
                       </form>
                     ';
 

@@ -64,8 +64,8 @@ session_start();
                 <h1 class="display-3">Bien-être</h1>
                 <?php  if(isset($_SESSION['login']))//bloc quand l'utilisateur est connecté
                     {
-                        echo'<a class="btn btn-secondary btn-lg" href="discussion.php" role="button">Discussion</a>';
-                        echo'<a class="btn btn-secondary btn-lg" href="profil.php" role="button">Modifier Profil</a>';
+                        echo'<a class="btn btn-secondary btn-lg" href="discussion.php" role="button">Discuter</a>';
+                        echo '<form action="profil.php" method="post"><button type="submit" class="btn btn-secondary btn-lg" name="modifier"> Modifier </button></form>';
                     }
                     
                     //page avant connexion ou inscription:
@@ -73,6 +73,7 @@ session_start();
                 echo '<p class="lead">Veuillez vous inscrire ou vous connecter pour rentrer dans la discussion.</p><br/>';
                 
                     echo'<a class="btn btn-secondary btn-lg" href="inscription.php" role="button">Inscription</a>';
+                    
                     echo'<a class="btn btn-secondary btn-lg" href="connexion.php" role="button">Connexion</a>';
                     }
                 ?>
