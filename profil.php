@@ -2,6 +2,8 @@
 
 session_start();
 
+$pdo = new PDO('mysql:host=localhost;dbname=discussion', 'root', '', array(PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION));
+
 function valid_data($data){  //fonction pour éviter l'injection de code malveillant
     $data = trim($data);
     $data = stripslashes($data);
@@ -14,19 +16,30 @@ function valid_data($data){  //fonction pour éviter l'injection de code malveil
  if(isset($_POST['update']) && $_SESSION['id']==$_POST['id'] )
 {     
     //l'adhérent a modifié ses données, on conserve en variables ces nouvelles données
-    
+   
+
     $id= $_SESSION['id'];
     $login =valid_data($_POST['login']);
+    $old_login=$_SESSION['login'];
     $new_Password = $_POST['password'];
     $new_Password = password_hash($new_Password, PASSWORD_DEFAULT);
 
-    if ($_POST['password'] != $_POST['conf-password'])
+    //On vérifie tout d'abord s'il n'usurpe pas le login d'un autre adhérent déja dans la table utilisateurs
+    $stmt = $pdo->prepare("SELECT * FROM utilisateurs WHERE login = ?");
+     $stmt->execute([$login]);
+     $user = $stmt->fetch();
+
+    if(!empty($user)){
+        $error="Ce login appartient déja à un utilisateur";
+    }
+
+    elseif ($_POST['password'] != $_POST['conf-password'])
     {
         $error="Les mots de passe ne sont pas identiques!"; //erreur dans le formulaire
-    }        
+    }  
 
     else
-    {   $pdo = new PDO('mysql:host=localhost;dbname=discussion', 'root', '', array(PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION));
+    {   
         
         $req = $pdo->prepare('UPDATE utilisateurs  SET login = :login, password = :new_Password WHERE id = :id');
         $req->execute(array(
