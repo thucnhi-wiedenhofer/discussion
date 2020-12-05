@@ -48,7 +48,7 @@ if (isset($_POST['submit'])) {
             elseif (password_verify($password, $user['password']))//vérification de password
             { 
                 //attribue un code color random à l'utilisateur qui se connecte
-                $input=array('#F0201A','#E61AF0','#F0ED1A','#65F01A','#1AF0D9','#8F1AF0','#F06E1A','#1A9CF0','#1A4BF0','#F01A44');
+                $input=array('#9A74E7','#0A382F','#A9E779','#102C5B','#DD673C','#84A01C','#F0201A','#E61AF0','#F0ED1A','#65F01A','#1AF0D9','#8F1AF0','#F06E1A','#1A9CF0','#1A4BF0','#F01A44');
                 $rand_keys = array_rand($input, 2);
                 $rand_color = $input[$rand_keys[0]] ;
                 $_SESSION['color'] = $rand_color;
